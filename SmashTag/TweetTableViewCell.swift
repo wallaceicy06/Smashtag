@@ -15,20 +15,22 @@ class TweetTableViewCell: UITableViewCell {
     @IBOutlet weak var tweetTextLabel: UILabel!
     @IBOutlet weak var tweetCreatedLabel: UILabel!
     @IBOutlet weak var tweetProfileImageView: UIImageView!
-    
+
     var tweet: Twitter.Tweet? {
         didSet {
             updateUI()
         }
     }
-    
+
+    private var lastProfileImageUrlRequested: URL?
+
     private func updateUI() {
         // reset any existing tweet information
         tweetScreenNameLabel?.text = nil
         tweetTextLabel?.text = nil
         tweetCreatedLabel?.text = nil
         tweetProfileImageView?.image = nil
-        
+
         // load new information about our tweet (if any)
         if let tweet = self.tweet {
             tweetTextLabel?.text = tweet.text
@@ -37,15 +39,23 @@ class TweetTableViewCell: UITableViewCell {
                     tweetTextLabel.text! += " 📷"
                 }
             }
-            
+
             tweetScreenNameLabel?.text = "\(tweet.user)"
-            
-            if let profileImageUrl = tweet.user.profileImageURL {  
-                if let imageData = try? Data(contentsOf: profileImageUrl) {
-                    tweetProfileImageView?.image = UIImage(data: imageData)
+
+            if let profileImageUrl = tweet.user.profileImageURL {
+                lastProfileImageUrlRequested = profileImageUrl
+                DispatchQueue.global(qos: .userInteractive).async { [weak weakSelf = self] in
+                    if let imageData = try? Data(contentsOf: profileImageUrl) {
+                        DispatchQueue.main.async {
+                            if weakSelf?.lastProfileImageUrlRequested ??
+                                   weakSelf?.lastProfileImageUrlRequested! == profileImageUrl {
+                                weakSelf?.tweetProfileImageView?.image = UIImage(data: imageData)
+                            }
+                        }
+                    }
                 }
             }
-            
+
             let formatter = DateFormatter()
             if Date().timeIntervalSince(tweet.created) > 24*60*60 {
                 formatter.dateStyle = .short
@@ -53,8 +63,8 @@ class TweetTableViewCell: UITableViewCell {
                 formatter.timeStyle = .short
             }
             tweetCreatedLabel?.text = formatter.string(from: tweet.created)
-            
-            
+
+
         }
     }
 }
