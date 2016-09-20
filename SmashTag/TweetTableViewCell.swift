@@ -16,6 +16,12 @@ class TweetTableViewCell: UITableViewCell {
     @IBOutlet weak var tweetCreatedLabel: UILabel!
     @IBOutlet weak var tweetProfileImageView: UIImageView!
 
+    private struct TextAttributes {
+        static let hashtag = [NSForegroundColorAttributeName : UIColor.brown]
+        static let url = [NSForegroundColorAttributeName: UIColor.blue]
+        static let user = [NSForegroundColorAttributeName: UIColor.orange]
+    }
+
     var tweet: Twitter.Tweet? {
         didSet {
             updateUI()
@@ -23,6 +29,37 @@ class TweetTableViewCell: UITableViewCell {
     }
 
     private var lastProfileImageUrlRequested: URL?
+
+    private func makeAttributedString(fromText text: String,
+                                      withHashtags hashtags: [Mention],
+                                      withUrls urls: [Mention],
+                                      withUserMentions users: [Mention]) -> NSAttributedString {
+        let attributedString = NSMutableAttributedString(string: text)
+
+        for hashTag in hashtags {
+            attributedString.replaceCharacters(in: hashTag.nsrange,
+                                               with: NSAttributedString(
+                                                string: hashTag.keyword,
+                                                attributes: TextAttributes.hashtag))
+        }
+
+        for url in urls {
+            attributedString.replaceCharacters(in: url.nsrange,
+                                               with: NSAttributedString(
+                                                string: url.keyword,
+                                                attributes: TextAttributes.url))
+        }
+
+        for user in users {
+            attributedString.replaceCharacters(in: user.nsrange,
+                                               with: NSAttributedString(
+                                                string: user.keyword,
+                                                attributes: TextAttributes.user))
+
+        }
+
+        return attributedString
+    }
 
     private func updateUI() {
         // reset any existing tweet information
@@ -33,7 +70,13 @@ class TweetTableViewCell: UITableViewCell {
 
         // load new information about our tweet (if any)
         if let tweet = self.tweet {
-            tweetTextLabel?.text = tweet.text
+            tweetTextLabel?.attributedText =
+              makeAttributedString(
+                fromText: tweet.text,
+                withHashtags: tweet.hashtags,
+                withUrls: tweet.urls,
+                withUserMentions: tweet.userMentions)
+
             if tweetTextLabel?.text == nil {
                 for _ in tweet.media {
                     tweetTextLabel.text! += " 📷"
