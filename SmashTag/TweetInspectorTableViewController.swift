@@ -17,15 +17,27 @@ class TweetInspectorTableViewController: UITableViewController {
         }
     }
 
-    struct Storyboard {
+    struct Segues {
         static let searchForTweets = "SearchTweets"
     }
+
+    enum Section {
+        case hashtag
+        case user
+        case url
+    }
+
+    private var nameForSection: [Section:String] = [
+        .hashtag: "Hashtags",
+        .user: "Users",
+        .url: "URLs"
+    ]
 
     private var tweetInfoCells: [Array<Twitter.Mention>] {
         return [tweet.hashtags, tweet.userMentions, tweet.urls]
     }
 
-    private var tweetInfoSectionNames = ["Hashtags", "Users", "URLs"]
+    private var tweetInfoSections: [Section] = [.hashtag, .user, .url]
 
     // MARK: - Navigation
 
@@ -63,23 +75,21 @@ class TweetInspectorTableViewController: UITableViewController {
         }
 
         // Otherwise, return the static section name.
-        return tweetInfoSectionNames[section]
+        return nameForSection[tweetInfoSections[section]]
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch tweetInfoSectionNames[indexPath.section] {
-        case "Hashtags":
+        switch tweetInfoSections[indexPath.section] {
+        case .hashtag:
             fallthrough
-        case "Users":
+        case .user:
             let query = tweetInfoCells[indexPath.section][indexPath.item].keyword
-            performSegue(withIdentifier: Storyboard.searchForTweets, sender: query)
+            performSegue(withIdentifier: Segues.searchForTweets, sender: query)
             break
-        case "URLs":
+        case .url:
             if let url = URL(string: tweetInfoCells[indexPath.section][indexPath.item].keyword) {
                 UIApplication.shared.open(url)
             }
-        default:
-            break
         }
     }
 }
