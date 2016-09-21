@@ -53,21 +53,35 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         return true
     }
 
+    @IBAction func refreshTweets(_ sender: UIRefreshControl) {
+        if let request = lastTwitterRequest?.requestForNewer {
+            makeTwitterRequest(for: request) {
+                sender.endRefreshing()
+            }
+        } else {
+            sender.endRefreshing()
+        }
+    }
+
     private func searchForTweets() {
         if let request = twitterRequest {
-            lastTwitterRequest = request
-            DispatchQueue.global(qos: .userInteractive).async {
-                request.fetchTweets({ [weak weakSelf = self] (newTweets) in
-                    DispatchQueue.main.async(execute: {
-                        if request == weakSelf?.lastTwitterRequest {
-                            if !newTweets.isEmpty {
-                                weakSelf?.tweets.insert(newTweets, at: 0)
-                            }
-                        }
-                    })
-                })
-            }
+            makeTwitterRequest(for: request) {}
+        }
+    }
 
+    private func makeTwitterRequest(for request: Twitter.Request, completion: @escaping () -> Void) {
+        lastTwitterRequest = request
+        DispatchQueue.global(qos: .userInteractive).async {
+            request.fetchTweets({ [weak weakSelf = self] (newTweets) in
+                DispatchQueue.main.async(execute: {
+                    if request == weakSelf?.lastTwitterRequest {
+                        if !newTweets.isEmpty {
+                            weakSelf?.tweets.insert(newTweets, at: 0)
+                        }
+                    }
+                    completion()
+                })
+            })
         }
     }
 
