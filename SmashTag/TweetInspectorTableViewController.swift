@@ -17,12 +17,23 @@ class TweetInspectorTableViewController: UITableViewController {
         }
     }
 
+    struct Storyboard {
+        static let searchForTweets = "SearchTweets"
+    }
+
     private var tweetInfoCells: [Array<Twitter.Mention>] {
         return [tweet.hashtags, tweet.userMentions, tweet.urls]
     }
 
-    private var tweetInfoSectionNames: [String] {
-        return ["Hashtags", "Users", "URLs"]
+    private var tweetInfoSectionNames = ["Hashtags", "Users", "URLs"]
+
+    // MARK: - Navigation
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationVc = segue.destination as? TweetTableViewController,
+            let sendingQuery = sender as? String {
+            destinationVc.searchText = sendingQuery
+        }
     }
 
     // MARK: - Table view data source
@@ -50,8 +61,25 @@ class TweetInspectorTableViewController: UITableViewController {
         if tweetInfoCells[section].count == 0 {
             return nil
         }
-        
+
         // Otherwise, return the static section name.
         return tweetInfoSectionNames[section]
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch tweetInfoSectionNames[indexPath.section] {
+        case "Hashtags":
+            fallthrough
+        case "Users":
+            let query = tweetInfoCells[indexPath.section][indexPath.item].keyword
+            performSegue(withIdentifier: Storyboard.searchForTweets, sender: query)
+            break
+        case "URLs":
+            if let url = URL(string: tweetInfoCells[indexPath.section][indexPath.item].keyword) {
+                UIApplication.shared.open(url)
+            }
+        default:
+            break
+        }
     }
 }
