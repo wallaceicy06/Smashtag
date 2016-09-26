@@ -136,9 +136,7 @@
                                     <frame key="frameInset" width="375" height="111"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uzf-rw-dng">
-                                            <frame key="frameInset" minX="8" minY="8" width="367" height="90"/>
-                                        </imageView>
+                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uzf-rw-dng"/>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="topMargin" secondItem="uzf-rw-dng" secondAttribute="topMargin" id="5N5-1u-TAg"/>
