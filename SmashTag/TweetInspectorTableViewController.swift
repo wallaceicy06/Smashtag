@@ -17,27 +17,32 @@ class TweetInspectorTableViewController: UITableViewController {
         }
     }
 
-    struct Segues {
-        static let searchForTweets = "SearchTweets"
+    struct Storyboard {
+        static let searchForTweetsSegue = "SearchTweets"
+        static let tweetImageCellIdentifier = "TweetImage"
+        static let tweetImageViewTag = 1
+        static let tweetInfoCellIdentifier = "TweetInfo"
     }
 
     enum Section {
+        case image
         case hashtag
         case user
         case url
     }
 
     private var nameForSection: [Section:String] = [
+        .image: "Images",
         .hashtag: "Hashtags",
         .user: "Users",
         .url: "URLs"
     ]
 
-    private var tweetInfoCells: [Array<Twitter.Mention>] {
-        return [tweet.hashtags, tweet.userMentions, tweet.urls]
+    private var tweetInfoCells: [Array<AnyObject>] {
+        return [tweet.media, tweet.hashtags, tweet.userMentions, tweet.urls]
     }
 
-    private var tweetInfoSections: [Section] = [.hashtag, .user, .url]
+    private var tweetInfoSections: [Section] = [.image, .hashtag, .user, .url]
 
     // MARK: - Navigation
 
@@ -60,11 +65,34 @@ class TweetInspectorTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView,
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TweetInfo", for: indexPath)
+        let cellInfo = tweetInfoCells[indexPath.section][indexPath.item]
 
-        cell.textLabel?.text = tweetInfoCells[indexPath.section][indexPath.item].keyword
-
-        return cell
+        switch tweetInfoSections[indexPath.section] {
+        case .image:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: Storyboard.tweetImageCellIdentifier,
+                for: indexPath)
+            if let image = cellInfo as? Twitter.MediaItem {
+                DispatchQueue.global(qos: .userInteractive).async {
+                    if let imageData = try? Data(contentsOf: image.url) {
+                        DispatchQueue.main.async {
+                            if let imageView = cell.viewWithTag(Storyboard.tweetImageViewTag)
+                                as? UIImageView {
+                                imageView.image = UIImage(data: imageData)
+                            }
+                        }
+                    }
+                }
+            }
+            return cell
+        case .hashtag, .url, .user:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: Storyboard.tweetInfoCellIdentifier, for: indexPath)
+            if let mention = cellInfo as? Twitter.Mention {
+                cell.textLabel?.text = mention.keyword
+            }
+            return cell
+        }
     }
 
     override func tableView(_ tableView: UITableView,
@@ -84,12 +112,28 @@ class TweetInspectorTableViewController: UITableViewController {
             fallthrough
         case .user:
             let query = tweetInfoCells[indexPath.section][indexPath.item].keyword
-            performSegue(withIdentifier: Segues.searchForTweets, sender: query)
+            performSegue(withIdentifier: Storyboard.searchForTweetsSegue, sender: query)
             break
         case .url:
             if let url = URL(string: tweetInfoCells[indexPath.section][indexPath.item].keyword) {
                 UIApplication.shared.open(url)
             }
+        case .image:
+            break
+        }
+    }
+
+    override func tableView(_ tableView: UITableView,
+                            heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch tweetInfoSections[indexPath.section] {
+        case .image:
+            if let imageMedia = tweetInfoCells[indexPath.section][indexPath.row]
+                as? Twitter.MediaItem {
+                return tableView.bounds.width / CGFloat(imageMedia.aspectRatio)
+            }
+            fallthrough
+        default:
+            return UITableViewAutomaticDimension
         }
     }
 }
