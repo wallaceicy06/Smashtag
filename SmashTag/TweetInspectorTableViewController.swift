@@ -19,6 +19,7 @@ class TweetInspectorTableViewController: UITableViewController {
 
     struct Storyboard {
         static let searchForTweetsSegue = "SearchTweets"
+        static let inspectImageSegue = "InspectImage"
         static let tweetImageCellIdentifier = "TweetImage"
         static let tweetImageViewTag = 1
         static let tweetInfoCellIdentifier = "TweetInfo"
@@ -31,7 +32,7 @@ class TweetInspectorTableViewController: UITableViewController {
         case url
     }
 
-    private var nameForSection: [Section:String] = [
+    private let nameForSection: [Section:String] = [
         .image: "Images",
         .hashtag: "Hashtags",
         .user: "Users",
@@ -42,7 +43,9 @@ class TweetInspectorTableViewController: UITableViewController {
         return [tweet.media, tweet.hashtags, tweet.userMentions, tweet.urls]
     }
 
-    private var tweetInfoSections: [Section] = [.image, .hashtag, .user, .url]
+    private let tweetInfoSections: [Section] = [.image, .hashtag, .user, .url]
+
+    private var imageForUrl = [URL: UIImage]()
 
     // MARK: - Navigation
 
@@ -50,6 +53,9 @@ class TweetInspectorTableViewController: UITableViewController {
         if let destinationVc = segue.destination as? TweetTableViewController,
             let sendingQuery = sender as? String {
             destinationVc.searchText = sendingQuery
+        } else if let destinationVc = segue.destination as? TweetImageInspectorViewController,
+            let sendingImage = sender as? UIImage {
+            destinationVc.image = sendingImage
         }
     }
 
@@ -72,13 +78,15 @@ class TweetInspectorTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: Storyboard.tweetImageCellIdentifier,
                 for: indexPath)
-            if let image = cellInfo as? Twitter.MediaItem {
-                DispatchQueue.global(qos: .userInteractive).async {
-                    if let imageData = try? Data(contentsOf: image.url) {
+            if let mediaItem = cellInfo as? Twitter.MediaItem {
+                DispatchQueue.global(qos: .userInteractive).async { [weak weakSelf = self] in
+                    if let imageData = try? Data(contentsOf: mediaItem.url) {
+                        let image = UIImage(data: imageData)
+                        weakSelf?.imageForUrl[mediaItem.url] = image
                         DispatchQueue.main.async {
                             if let imageView = cell.viewWithTag(Storyboard.tweetImageViewTag)
                                 as? UIImageView {
-                                imageView.image = UIImage(data: imageData)
+                                imageView.image = image
                             }
                         }
                     }
@@ -119,7 +127,11 @@ class TweetInspectorTableViewController: UITableViewController {
                 UIApplication.shared.open(url)
             }
         case .image:
-            break
+            if let mediaItem = tweetInfoCells[indexPath.section][indexPath.item] as? Twitter.MediaItem {
+                if let image = imageForUrl[mediaItem.url] {
+                    performSegue(withIdentifier: Storyboard.inspectImageSegue, sender: image)
+                }
+            }
         }
     }
 
