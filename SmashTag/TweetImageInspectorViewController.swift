@@ -10,9 +10,8 @@ import UIKit
 
 class TweetImageInspectorViewController: UIViewController, UIScrollViewDelegate {
 
-    struct ScrollViewScale {
-        static let minimumZoomScale = CGFloat(0.25)
-        static let maximumZoomScale = CGFloat(4.0)
+    struct ZoomConstants {
+        static let maximumFactor = CGFloat(4.0)
     }
 
     var image: UIImage? {
@@ -25,8 +24,7 @@ class TweetImageInspectorViewController: UIViewController, UIScrollViewDelegate 
         didSet {
             scrollView.contentSize = imageView.frame.size
             scrollView.delegate = self
-            scrollView.minimumZoomScale = ScrollViewScale.minimumZoomScale
-            scrollView.maximumZoomScale = ScrollViewScale.maximumZoomScale
+
         }
     }
 
@@ -44,6 +42,14 @@ class TweetImageInspectorViewController: UIViewController, UIScrollViewDelegate 
 
     private func updateUI() {
         imageView?.image = image
+
+        if imageView?.image != nil {
+            let initialZoomScale = min(self.view.bounds.size.width / imageView.image!.size.width,
+                                       self.view.bounds.size.height / imageView.image!.size.height)
+            scrollView.minimumZoomScale = initialZoomScale
+            scrollView.maximumZoomScale = initialZoomScale * ZoomConstants.maximumFactor
+            scrollView.zoomScale = initialZoomScale
+        }
     }
 
 }

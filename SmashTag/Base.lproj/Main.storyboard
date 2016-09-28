@@ -27,7 +27,7 @@
                                 <rect key="frame" x="0.0" y="55" width="375" height="170"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7Js-A7-uyL" id="GI8-09-Kwh">
-                                    <frame key="frameInset" width="375" height="169.5"/>
+                                    <frame key="frameInset" width="375" height="169"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="LvY-GH-1rM">
@@ -49,14 +49,12 @@
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="EmX-vL-K5L">
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="300" ambiguous="YES" text="Tweeter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DLr-zD-e10">
-                                                            <frame key="frameInset" width="289" height="21"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="300" text="Tweeter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DLr-zD-e10">
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Tweet text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c5B-er-edT">
-                                                            <frame key="frameInset" minY="21" width="289" height="133"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tweet text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c5B-er-edT">
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -113,14 +111,14 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TweetInfo" textLabel="SAL-q1-xCl" style="IBUITableViewCellStyleDefault" id="ovS-a4-dTa">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="56" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ovS-a4-dTa" id="r0q-3u-Zx9">
-                                    <frame key="frameInset" width="375" height="43.5"/>
+                                    <frame key="frameInset" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SAL-q1-xCl">
-                                            <frame key="frameInset" minX="15" width="345" height="43.5"/>
+                                            <frame key="frameInset" minX="15" width="345" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -130,10 +128,10 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TweetImage" rowHeight="112" id="Nbn-8R-4TB">
-                                <rect key="frame" x="0.0" y="99.5" width="375" height="112"/>
+                                <rect key="frame" x="0.0" y="100" width="375" height="112"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nbn-8R-4TB" id="4Zl-8y-NJh">
-                                    <frame key="frameInset" width="375" height="111.5"/>
+                                    <frame key="frameInset" width="375" height="111"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uzf-rw-dng"/>
@@ -174,26 +172,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oys-ko-UxN">
-                                <frame key="frameInset" minX="-20" minY="-20" width="415" height="707"/>
+                                <frame key="frameInset" width="375" height="667"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="62k-GP-0pv">
-                                        <rect key="frame" x="20" y="20" width="375" height="667"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="62k-GP-0pv" firstAttribute="top" secondItem="oys-ko-UxN" secondAttribute="top" constant="20" id="KLV-Lu-9LK"/>
-                                    <constraint firstItem="62k-GP-0pv" firstAttribute="leading" secondItem="oys-ko-UxN" secondAttribute="leading" constant="20" id="X71-oT-WAI"/>
-                                    <constraint firstAttribute="trailing" secondItem="62k-GP-0pv" secondAttribute="trailing" constant="20" id="ZJi-04-WXn"/>
-                                    <constraint firstAttribute="bottom" secondItem="62k-GP-0pv" secondAttribute="bottom" constant="20" id="sr4-V3-yp4"/>
+                                    <constraint firstAttribute="trailing" secondItem="62k-GP-0pv" secondAttribute="trailing" id="0HF-PO-3uf"/>
+                                    <constraint firstItem="62k-GP-0pv" firstAttribute="top" secondItem="oys-ko-UxN" secondAttribute="top" id="4cK-kF-lL9"/>
+                                    <constraint firstItem="62k-GP-0pv" firstAttribute="leading" secondItem="oys-ko-UxN" secondAttribute="leading" id="FDI-BT-88C"/>
+                                    <constraint firstAttribute="bottom" secondItem="62k-GP-0pv" secondAttribute="bottom" id="ekA-mQ-FgQ"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="oys-ko-UxN" firstAttribute="leading" secondItem="BlW-b0-isg" secondAttribute="leadingMargin" constant="-36" id="GLQ-Br-Pl8"/>
-                            <constraint firstItem="oys-ko-UxN" firstAttribute="centerY" secondItem="BlW-b0-isg" secondAttribute="centerY" id="IhV-ip-mUw"/>
-                            <constraint firstItem="oys-ko-UxN" firstAttribute="centerX" secondItem="BlW-b0-isg" secondAttribute="centerX" id="o5w-f8-Bf8"/>
-                            <constraint firstItem="oys-ko-UxN" firstAttribute="top" secondItem="BlW-b0-isg" secondAttribute="topMargin" constant="-20" id="tDe-rV-9SZ"/>
+                            <constraint firstAttribute="trailing" secondItem="oys-ko-UxN" secondAttribute="trailing" id="6pD-aF-fOt"/>
+                            <constraint firstItem="oys-ko-UxN" firstAttribute="bottom" secondItem="SbL-t3-AVv" secondAttribute="top" id="FO7-1d-r3F"/>
+                            <constraint firstItem="oys-ko-UxN" firstAttribute="top" secondItem="BlW-b0-isg" secondAttribute="top" id="R4t-gr-hp7"/>
+                            <constraint firstItem="oys-ko-UxN" firstAttribute="leading" secondItem="BlW-b0-isg" secondAttribute="leading" id="ezL-Pa-7Dk"/>
                         </constraints>
                     </view>
                     <connections>
