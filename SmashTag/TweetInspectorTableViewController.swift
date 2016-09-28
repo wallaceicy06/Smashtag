@@ -127,7 +127,8 @@ class TweetInspectorTableViewController: UITableViewController {
                 UIApplication.shared.open(url)
             }
         case .image:
-            if let mediaItem = tweetInfoCells[indexPath.section][indexPath.item] as? Twitter.MediaItem {
+            if let mediaItem = tweetInfoCells[indexPath.section][indexPath.item]
+                as? Twitter.MediaItem {
                 if let image = imageForUrl[mediaItem.url] {
                     performSegue(withIdentifier: Storyboard.inspectImageSegue, sender: image)
                 }

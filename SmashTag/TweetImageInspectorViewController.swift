@@ -8,7 +8,12 @@
 
 import UIKit
 
-class TweetImageInspectorViewController: UIViewController {
+class TweetImageInspectorViewController: UIViewController, UIScrollViewDelegate {
+
+    struct ScrollViewScale {
+        static let minimumZoomScale = CGFloat(0.25)
+        static let maximumZoomScale = CGFloat(4.0)
+    }
 
     var image: UIImage? {
         didSet {
@@ -16,7 +21,20 @@ class TweetImageInspectorViewController: UIViewController {
         }
     }
 
+    @IBOutlet weak var scrollView: UIScrollView! {
+        didSet {
+            scrollView.contentSize = imageView.frame.size
+            scrollView.delegate = self
+            scrollView.minimumZoomScale = ScrollViewScale.minimumZoomScale
+            scrollView.maximumZoomScale = ScrollViewScale.maximumZoomScale
+        }
+    }
+
     @IBOutlet weak var imageView: UIImageView!
+
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
