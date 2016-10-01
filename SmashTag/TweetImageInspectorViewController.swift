@@ -36,6 +36,7 @@ class TweetImageInspectorViewController: UIViewController, UIScrollViewDelegate 
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
 
         updateUI()
     }
