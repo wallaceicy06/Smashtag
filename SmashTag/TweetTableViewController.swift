@@ -9,7 +9,7 @@
 import UIKit
 import Twitter
 
-class TweetTableViewController: UITableViewController, UITextFieldDelegate {
+class TweetTableViewController: UITableViewController, UISearchBarDelegate {
 
     var searchText: String? {
         didSet {
@@ -25,10 +25,10 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         }
     }
 
-    @IBOutlet weak var searchTextField: UITextField! {
+    @IBOutlet weak var searchBar: UISearchBar! {
         didSet {
-            searchTextField.delegate = self
-            searchTextField.text = searchText
+            searchBar.delegate = self
+            searchBar.text = searchText
         }
     }
 
@@ -46,11 +46,10 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
     }
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        searchText = textField.text
-        return true
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        searchText = searchBar.text
     }
 
     @IBAction func refreshTweets(_ sender: UIRefreshControl) {

@@ -11,20 +11,18 @@
         <scene sceneID="N3g-Gh-kGA">
             <objects>
                 <tableViewController id="mps-29-gIg" customClass="TweetTableViewController" customModule="SmashTag" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="170" sectionHeaderHeight="25" sectionFooterHeight="28" id="pyX-Sa-GrO">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="170" sectionHeaderHeight="25" sectionFooterHeight="28" id="pyX-Sa-GrO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <textField key="tableHeaderView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search for tweets..." textAlignment="natural" minimumFontSize="17" id="baW-Gn-tHk">
-                            <rect key="frame" x="0.0" y="64" width="375" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <nil key="textColor"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search for tweets..." id="mIh-CN-maB">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
-                        </textField>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Tweet" rowHeight="170" id="7Js-A7-uyL" customClass="TweetTableViewCell" customModule="SmashTag" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="119" width="375" height="170"/>
+                                <rect key="frame" x="0.0" y="69" width="375" height="170"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7Js-A7-uyL" id="GI8-09-Kwh">
                                     <frame key="frameInset" width="375" height="169.5"/>
@@ -97,7 +95,7 @@
                         </connections>
                     </refreshControl>
                     <connections>
-                        <outlet property="searchTextField" destination="baW-Gn-tHk" id="aMW-6l-7H3"/>
+                        <outlet property="searchBar" destination="mIh-CN-maB" id="3MY-c8-PDw"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b0c-1g-pBP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -114,7 +112,7 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TweetInfo" textLabel="SAL-q1-xCl" style="IBUITableViewCellStyleDefault" id="ovS-a4-dTa">
-                                <rect key="frame" x="0.0" y="119.5" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ovS-a4-dTa" id="r0q-3u-Zx9">
                                     <frame key="frameInset" width="375" height="43.5"/>
@@ -131,7 +129,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TweetImage" rowHeight="112" id="Nbn-8R-4TB">
-                                <rect key="frame" x="0.0" y="163.5" width="375" height="112"/>
+                                <rect key="frame" x="0.0" y="99.5" width="375" height="112"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nbn-8R-4TB" id="4Zl-8y-NJh">
                                     <frame key="frameInset" width="375" height="111.5"/>
