@@ -9,7 +9,10 @@
 import UIKit
 import Twitter
 
-class TweetTableViewController: UITableViewController, UISearchBarDelegate {
+class TweetTableViewController: UIViewController,
+                                UITableViewDelegate,
+                                UITableViewDataSource,
+                                UISearchBarDelegate {
 
     var searchText: String? {
         didSet {
@@ -21,7 +24,16 @@ class TweetTableViewController: UITableViewController, UISearchBarDelegate {
 
     var tweets = [Array<Twitter.Tweet>]() {
         didSet {
-            tableView.reloadData()
+            tableView?.reloadData()
+        }
+    }
+
+    var refreshControl: UIRefreshControl!
+
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.delegate = self
+            tableView.dataSource = self
         }
     }
 
@@ -45,18 +57,25 @@ class TweetTableViewController: UITableViewController, UISearchBarDelegate {
         super.viewDidLoad()
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
+
+        refreshControl = UIRefreshControl()
+        refreshControl.backgroundColor = tableView.backgroundColor
+        refreshControl.addTarget(self,
+                                 action: #selector(TweetTableViewController.refreshTweets(_:)),
+                                 for: .valueChanged)
+        self.tableView.addSubview(refreshControl)
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        self.navigationController?.hidesBarsWhenVerticallyCompact = true
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        self.navigationController?.hidesBarsWhenVerticallyCompact = false
     }
-    
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         searchText = searchBar.text
@@ -95,13 +114,19 @@ class TweetTableViewController: UITableViewController, UISearchBarDelegate {
         }
     }
 
+    // MARK: - Table view delegate
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return tweets.count
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tweets[section].count
     }
 
@@ -109,8 +134,8 @@ class TweetTableViewController: UITableViewController, UISearchBarDelegate {
         static let TweetCellIdentifier = "Tweet"
     }
 
-    override func tableView(_ tableView: UITableView,
-                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Storyboard.TweetCellIdentifier,
                                                  for: indexPath)
 
@@ -130,7 +155,6 @@ class TweetTableViewController: UITableViewController, UISearchBarDelegate {
             if let cellIndexPath = tableView.indexPath(for: cellSender) {
                 let tweetSender = tweets[cellIndexPath.section][cellIndexPath.item]
                 destinationVc.tweet = tweetSender
-
             }
         }
     }
