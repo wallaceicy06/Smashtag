@@ -15,11 +15,11 @@ class TweetTabBarViewController: UITabBarController {
         // for this view controller. Set the table view controller's search history delegate to the
         // one that was found.
         if let tweetTableVc = self.viewControllers?.first(
-                where: {(controller: UIViewController) -> Bool in
+                where: {(controller) in
                     return controller.contentViewController is TweetTableViewController
                 })?.contentViewController as? TweetTableViewController,
             let searchHistoryDelegate = self.viewControllers?.first(
-                where: {(controller: UIViewController) -> Bool in
+                where: {(controller) in
                     return controller.contentViewController is SearchHistoryDelegate
                 })?.contentViewController as? SearchHistoryDelegate {
             tweetTableVc.searchHistoryDelegate = searchHistoryDelegate
