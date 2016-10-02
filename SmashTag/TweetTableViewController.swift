@@ -14,11 +14,15 @@ class TweetTableViewController: UIViewController,
                                 UITableViewDataSource,
                                 UISearchBarDelegate {
 
+    var searchHistoryDelegate: SearchHistoryDelegate?
+
     var searchText: String? {
         didSet {
             tweets.removeAll()
             searchForTweets()
+            self.searchHistoryDelegate?.didSearchFor(query: searchText!)
             title = searchText
+            searchBar?.text = searchText
         }
     }
 
@@ -40,7 +44,6 @@ class TweetTableViewController: UIViewController,
     @IBOutlet weak var searchBar: UISearchBar! {
         didSet {
             searchBar.delegate = self
-            searchBar.text = searchText
         }
     }
 
@@ -159,4 +162,5 @@ class TweetTableViewController: UIViewController,
         }
     }
 
+    @IBAction func unwind(for unwindSegue: UIStoryboardSegue) {}
 }

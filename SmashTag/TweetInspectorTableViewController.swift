@@ -18,7 +18,7 @@ class TweetInspectorTableViewController: UITableViewController {
     }
 
     struct Storyboard {
-        static let searchForTweetsSegue = "SearchTweets"
+        static let returnToSearchSegue = "ReturnToSearch"
         static let inspectImageSegue = "InspectImage"
         static let tweetImageCellIdentifier = "TweetImage"
         static let tweetImageViewTag = 1
@@ -58,6 +58,8 @@ class TweetInspectorTableViewController: UITableViewController {
             destinationVc.image = sendingImage
         }
     }
+
+
 
     // MARK: - Table view data source
 
@@ -120,7 +122,7 @@ class TweetInspectorTableViewController: UITableViewController {
             fallthrough
         case .user:
             let query = tweetInfoCells[indexPath.section][indexPath.item].keyword
-            performSegue(withIdentifier: Storyboard.searchForTweetsSegue, sender: query)
+            performSegue(withIdentifier: Storyboard.returnToSearchSegue, sender: query)
             break
         case .url:
             if let url = URL(string: tweetInfoCells[indexPath.section][indexPath.item].keyword) {
