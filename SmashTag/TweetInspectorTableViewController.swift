@@ -117,6 +117,8 @@ class TweetInspectorTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
         switch tweetInfoSections[indexPath.section] {
         case .hashtag:
             fallthrough
