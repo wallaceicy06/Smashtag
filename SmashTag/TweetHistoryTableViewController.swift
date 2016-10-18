@@ -22,6 +22,16 @@ class TweetHistoryTableViewController: UITableViewController, SearchHistoryDeleg
 
     private struct Storyboard {
         static let historicalTweetCellIdentifier = "HistoricalSearch"
+        static let searchForTweetsSegue = "SearchForTweets"
+    }
+
+    // MARK: Navigation
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationVc = segue.destination as? TweetTableViewController,
+            let sendingCell = sender as? UITableViewCell {
+            destinationVc.searchText = sendingCell.textLabel?.text
+        }
     }
 
     // MARK: SearchHistoryDelegate

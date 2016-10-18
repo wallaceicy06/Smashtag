@@ -10,7 +10,6 @@
         <!--Tweet Tab Bar View Controller-->
         <scene sceneID="zEs-wa-0W3">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WjP-bj-oKg" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tabBarController id="siK-oS-RC2" customClass="TweetTabBarViewController" customModule="SmashTag" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="aeh-KA-cET">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
@@ -22,6 +21,7 @@
                         <segue destination="qF4-EZ-QSY" kind="relationship" relationship="viewControllers" id="gcN-t0-zZH"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WjP-bj-oKg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-350" y="146"/>
         </scene>
@@ -275,6 +275,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="1p8-2A-rfe" kind="show" id="voD-oL-H4Y"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -308,4 +311,7 @@
             <point key="canvasLocation" x="656.79999999999995" y="939.58020989505258"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="voD-oL-H4Y"/>
+    </inferredMetricsTieBreakers>
 </document>
