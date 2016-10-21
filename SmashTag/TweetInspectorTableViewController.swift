@@ -11,7 +11,7 @@ import Twitter
 
 class TweetInspectorTableViewController: UITableViewController {
 
-    var tweet: Tweet! {
+    var tweet: Twitter.Tweet! {
         didSet {
             tableView.reloadData()
         }

@@ -34,6 +34,10 @@ class TweetHistoryTableViewController: UITableViewController, SearchHistoryDeleg
         }
     }
 
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        return !isEditing
+    }
+
     // MARK: SearchHistoryDelegate
 
     func didSearchFor(query: String) {
