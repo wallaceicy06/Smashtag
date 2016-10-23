@@ -18,6 +18,6 @@ extension Tweet {
     @NSManaged public var posted: NSDate?
     @NSManaged public var text: String?
     @NSManaged public var unique: String?
-    @NSManaged public var tweeters: TwitterUser?
+    @NSManaged public var tweeter: TwitterUser?
 
 }

@@ -8,11 +8,15 @@
 
 import UIKit
 import Twitter
+import CoreData
 
 class TweetTableViewController: UIViewController,
                                 UITableViewDelegate,
                                 UITableViewDataSource,
                                 UISearchBarDelegate {
+
+    var managedObjectContext: NSManagedObjectContext? =
+        (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext
 
     var searchHistoryDelegate: SearchHistoryDelegate?
 
@@ -100,6 +104,34 @@ class TweetTableViewController: UIViewController,
         }
     }
 
+    private func updateDatabase(newTweets: [Twitter.Tweet]) {
+        managedObjectContext?.perform {
+            for twitterInfo in newTweets {
+                _ = Tweet.tweetWith(twitterInfo: twitterInfo,
+                                    inManagedContext: self.managedObjectContext!)
+                do {
+                    try self.managedObjectContext?.save()
+                } catch let error {
+                    print ("Core Data Error: \(error)")
+                }
+            }
+        }
+        printDatabaseStatistics()
+        print("done printing statistics")
+    }
+
+    private func printDatabaseStatistics() {
+        managedObjectContext?.perform {
+            if let results = try? self.managedObjectContext!.fetch(
+                TwitterUser.fetchRequest() as NSFetchRequest<TwitterUser>) {
+                print("\(results.count) TwitterUsers")
+            }
+
+            let tweetCount = try? self.managedObjectContext!.count(for: Tweet.fetchRequest())
+            print("\(tweetCount) Tweets")
+        }
+    }
+
     private func makeTwitterRequest(for request: Twitter.Request,
                                     whenComplete callback: @escaping () -> Void) {
         lastTwitterRequest = request
@@ -109,6 +141,7 @@ class TweetTableViewController: UIViewController,
                     if request == weakSelf?.lastTwitterRequest {
                         if !newTweets.isEmpty {
                             weakSelf?.tweets.insert(newTweets, at: 0)
+                            self.updateDatabase(newTweets: newTweets)
                         }
                     }
                     callback()
@@ -159,6 +192,9 @@ class TweetTableViewController: UIViewController,
                 let tweetSender = tweets[cellIndexPath.section][cellIndexPath.item]
                 destinationVc.tweet = tweetSender
             }
+        } else if let destinationVc = segue.destination as? TweetersTableViewController {
+            destinationVc.mention = searchText
+            destinationVc.managedObjectContext = managedObjectContext
         }
     }
 
