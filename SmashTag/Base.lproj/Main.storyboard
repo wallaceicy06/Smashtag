@@ -44,7 +44,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="170" sectionHeaderHeight="25" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3Jf-0e-Wcl">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Tweet" rowHeight="170" id="Ngq-KH-qKp" customClass="TweetTableViewCell" customModule="SmashTag" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Tweet" rowHeight="170" id="Ngq-KH-qKp" customClass="TweetTableViewCell" customModule="SmashTag" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="25" width="375" height="170"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ngq-KH-qKp" id="Ak6-nB-8wP">
@@ -71,13 +71,13 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Ou0-bk-uLI">
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="300" ambiguous="YES" text="Tweeter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T3A-Hq-Msd">
-                                                                    <frame key="frameInset" width="914" height="21"/>
+                                                                    <frame key="frameInset" width="289" height="21"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Tweet text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5mG-1k-z1A">
-                                                                    <frame key="frameInset" minY="21" width="914" height="133"/>
+                                                                    <frame key="frameInset" minY="21" width="289" height="133"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -120,7 +120,7 @@
                     <navigationItem key="navigationItem" title="SmashTag" id="0pT-oL-PfM">
                         <barButtonItem key="rightBarButtonItem" title="Tweeters" id="gGG-H6-1eD">
                             <connections>
-                                <segue destination="dAA-fp-nAL" kind="show" identifier="TweetersMentioningSearchTerm" id="5hh-VA-hL6"/>
+                                <segue destination="dAA-fp-nAL" kind="show" identifier="TweetersMentioningSearchTerm" id="zJo-cT-INj"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -287,7 +287,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ZDf-bs-IHj" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="search" id="OMY-hM-6Ka"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="EQI-1s-JCa">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="EQI-1s-JCa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -347,7 +347,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qF4-EZ-QSY" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="recents" id="g8l-RT-0SI"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="nXQ-WJ-AHw">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nXQ-WJ-AHw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

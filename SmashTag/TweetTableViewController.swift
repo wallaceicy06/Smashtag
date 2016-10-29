@@ -168,6 +168,7 @@ class TweetTableViewController: UIViewController,
 
     private struct Storyboard {
         static let TweetCellIdentifier = "Tweet"
+        static let TweetersMentioningSearchTermSegue = "TweetersMentioningSearchTerm"
     }
 
     func tableView(_ tableView: UITableView,
@@ -186,13 +187,15 @@ class TweetTableViewController: UIViewController,
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destinationVc = segue.destination as? TweetInspectorTableViewController,
+        if let destinationVc = segue.destination.contentViewController
+            as? TweetInspectorTableViewController,
            let cellSender = sender as? UITableViewCell {
             if let cellIndexPath = tableView.indexPath(for: cellSender) {
                 let tweetSender = tweets[cellIndexPath.section][cellIndexPath.item]
                 destinationVc.tweet = tweetSender
             }
-        } else if let destinationVc = segue.destination as? TweetersTableViewController {
+        } else if let destinationVc = segue.destination.contentViewController
+            as? TweetersTableViewController {
             destinationVc.mention = searchText
             destinationVc.managedObjectContext = managedObjectContext
         }
