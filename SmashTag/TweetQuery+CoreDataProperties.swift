@@ -1,5 +1,5 @@
 //
-//  TwitterUser+CoreDataProperties.swift
+//  TweetQuery+CoreDataProperties.swift
 //  SmashTag
 //
 //  Created by Sean Harger on 11/6/16.
@@ -9,20 +9,19 @@
 import Foundation
 import CoreData
 
-extension TwitterUser {
+extension TweetQuery {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<TwitterUser> {
-        return NSFetchRequest<TwitterUser>(entityName: "TwitterUser")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<TweetQuery> {
+        return NSFetchRequest<TweetQuery>(entityName: "TweetQuery")
     }
 
-    @NSManaged public var name: String?
-    @NSManaged public var screenName: String?
+    @NSManaged public var term: String?
     @NSManaged public var tweets: NSSet?
 
 }
 
 // MARK: Generated accessors for tweets
-extension TwitterUser {
+extension TweetQuery {
 
     @objc(addTweetsObject:)
     @NSManaged public func addToTweets(_ value: Tweet)

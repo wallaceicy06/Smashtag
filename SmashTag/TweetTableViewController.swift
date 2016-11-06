@@ -104,16 +104,16 @@ class TweetTableViewController: UIViewController,
         }
     }
 
-    private func updateDatabase(newTweets: [Twitter.Tweet]) {
+    private func updateDatabase(withQuery term: String, newTweets: [Twitter.Tweet]) {
         managedObjectContext?.perform {
-            for twitterInfo in newTweets {
-                _ = Tweet.tweetWith(twitterInfo: twitterInfo,
-                                    inManagedContext: self.managedObjectContext!)
-                do {
-                    try self.managedObjectContext?.save()
-                } catch let error {
-                    print ("Core Data Error: \(error)")
-                }
+            _ = TweetQuery.tweetQueryWith(term: term,
+                                      tweets: newTweets,
+                                      inManagedContext: self.managedObjectContext!)
+
+            do {
+                try self.managedObjectContext?.save()
+            } catch let error {
+                print ("Core Data Error: \(error)")
             }
         }
         printDatabaseStatistics()
@@ -141,7 +141,8 @@ class TweetTableViewController: UIViewController,
                     if request == weakSelf?.lastTwitterRequest {
                         if !newTweets.isEmpty {
                             weakSelf?.tweets.insert(newTweets, at: 0)
-                            self.updateDatabase(newTweets: newTweets)
+                            weakSelf?.updateDatabase(withQuery: weakSelf!.searchText!,
+                                                     newTweets: newTweets)
                         }
                     }
                     callback()

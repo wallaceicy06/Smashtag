@@ -31,9 +31,10 @@ class TweetTableViewCell: UITableViewCell {
     private var lastProfileImageUrlRequested: URL?
 
     private func makeAttributedString(fromText text: String,
-                                      withHashtags hashtags: [Mention],
-                                      withUrls urls: [Mention],
-                                      withUserMentions users: [Mention]) -> NSAttributedString {
+                                      withHashtags hashtags: [Twitter.Mention],
+                                      withUrls urls: [Twitter.Mention],
+                                      withUserMentions users: [Twitter.Mention])
+        -> NSAttributedString {
         let attributedString = NSMutableAttributedString(string: text)
 
         for hashTag in hashtags {
