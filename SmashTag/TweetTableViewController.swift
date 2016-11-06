@@ -18,13 +18,10 @@ class TweetTableViewController: UIViewController,
     var managedObjectContext: NSManagedObjectContext? =
         (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext
 
-    var searchHistoryDelegate: SearchHistoryDelegate?
-
     var searchText: String? {
         didSet {
             tweets.removeAll()
             searchForTweets()
-            self.searchHistoryDelegate?.didSearchFor(query: searchText!)
             title = searchText
             searchBar?.text = searchText
         }
