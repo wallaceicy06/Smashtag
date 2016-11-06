@@ -79,8 +79,6 @@ class TweetersTableViewController: UITableViewController, NSFetchedResultsContro
         return cell
     }
 
-    // MARK: UITableViewDataSource
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return fetchedResultsController?.sections?.count ?? 1
     }

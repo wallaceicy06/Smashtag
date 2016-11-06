@@ -106,9 +106,11 @@ class TweetTableViewController: UIViewController,
 
     private func updateDatabase(withQuery term: String, newTweets: [Twitter.Tweet]) {
         managedObjectContext?.perform {
-            _ = TweetQuery.tweetQueryWith(term: term,
-                                      tweets: newTweets,
-                                      inManagedContext: self.managedObjectContext!)
+            let tweetQuery = TweetQuery.tweetQueryWith(
+                term: term,
+                tweets: newTweets,
+                inManagedContext: self.managedObjectContext!)
+            tweetQuery.refreshLastQueryTimeToNow()
 
             do {
                 try self.managedObjectContext?.save()

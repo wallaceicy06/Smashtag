@@ -27,6 +27,10 @@ public class TweetQuery: NSManagedObject {
         }
     }
 
+    func refreshLastQueryTimeToNow() {
+        self.lastQueryTime = NSDate()
+    }
+
     private class func addTweets(_ tweets: [Twitter.Tweet],
                                 toQuery query: TweetQuery,
                                 inManagedContext context: NSManagedObjectContext) -> TweetQuery {
@@ -37,5 +41,4 @@ public class TweetQuery: NSManagedObject {
 
         return query
     }
-
 }

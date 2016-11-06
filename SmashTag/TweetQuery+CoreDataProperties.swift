@@ -16,6 +16,7 @@ extension TweetQuery {
     }
 
     @NSManaged public var term: String?
+    @NSManaged public var lastQueryTime: NSDate?
     @NSManaged public var tweets: NSSet?
 
 }
