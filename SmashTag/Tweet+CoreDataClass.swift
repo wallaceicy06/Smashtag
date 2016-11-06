@@ -32,6 +32,11 @@ public class Tweet: NSManagedObject {
                                                            inManagedContext: context))
             }
 
+            for mention in twitterInfo.hashtags {
+                newTweet.addToMentions(Mention.mentionWith(twitterInfo: mention,
+                                                           inManagedContext: context))
+            }
+
             return newTweet
         }
     }
