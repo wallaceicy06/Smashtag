@@ -326,7 +326,8 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="1p8-2A-rfe" kind="show" id="voD-oL-H4Y"/>
+                                    <segue destination="1p8-2A-rfe" kind="show" identifier="SearchForTerm" id="voD-oL-H4Y"/>
+                                    <segue destination="ySE-td-INc" kind="show" identifier="ShowPopularMentions" trigger="accessoryAction" id="ntE-2b-cLR"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -335,11 +336,42 @@
                             <outlet property="delegate" destination="FiN-nH-ML3" id="Zgv-gF-2C5"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Search History" id="Y2k-lV-ZaG"/>
+                    <navigationItem key="navigationItem" title="Search History" id="Y2k-lV-ZaG">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="wSX-Uz-ly0"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="on9-sv-IPL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1596" y="939.58020989505258"/>
+        </scene>
+        <!--Popular Mentions-->
+        <scene sceneID="l0x-K1-bYY">
+            <objects>
+                <tableViewController id="ySE-td-INc" customClass="PopularMentionsTableViewController" customModule="SmashTag" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="a7p-Yl-fVG">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PopularMentionsCell" id="OJa-Qb-vMg">
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OJa-Qb-vMg" id="pc1-Us-Pn6">
+                                    <frame key="frameInset" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="ySE-td-INc" id="X1V-yN-ukz"/>
+                            <outlet property="delegate" destination="ySE-td-INc" id="c6z-FB-n6H"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Popular Mentions" id="sg2-0N-whd"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2w9-My-Vkg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2732" y="940"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="cLa-w3-KGB">

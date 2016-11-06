@@ -13,7 +13,7 @@ import Twitter
 public class Mention: NSManagedObject {
 
     class func mentionWith(twitterInfo: Twitter.Mention,
-                     inManagedContext context: NSManagedObjectContext) -> Mention {
+                           inManagedContext context: NSManagedObjectContext) -> Mention {
         let request: NSFetchRequest<Mention> = Mention.fetchRequest()
 
         request.predicate = NSPredicate(

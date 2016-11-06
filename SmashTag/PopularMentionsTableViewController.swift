@@ -1,19 +1,23 @@
 //
-//  TweetHistoryTableViewController.swift
+//  PopularMentionsTableViewController.swift
 //  SmashTag
 //
-//  Created by Sean Harger on 10/1/16.
+//  Created by Sean Harger on 11/6/16.
 //  Copyright © 2016 Sean Harger Inc. All rights reserved.
 //
 
 import UIKit
 import CoreData
 
-class TweetHistoryTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class PopularMentionsTableViewController: UITableViewController,
+                                          NSFetchedResultsControllerDelegate {
 
-    var managedObjectContext: NSManagedObjectContext? =
-        (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext
-    var fetchedResultsController: NSFetchedResultsController<TweetQuery>? {
+    var twitterQuery: TweetQuery? {
+        didSet {
+            updateUI()
+        }
+    }
+    var fetchedResultsController: NSFetchedResultsController<Mention>? {
         didSet {
             do {
                 if let frc = fetchedResultsController {
@@ -27,22 +31,12 @@ class TweetHistoryTableViewController: UITableViewController, NSFetchedResultsCo
         }
     }
 
-    private struct Constants {
-        static let maxTweetHistory = 100
-    }
-
-    private struct Storyboard {
-        static let historicalTweetCellIdentifier = "HistoricalSearch"
-        static let searchForTweetsSegue = "SearchForTweets"
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        if let context = managedObjectContext {
-            let request: NSFetchRequest<TweetQuery> = TweetQuery.fetchRequest()
-            request.sortDescriptors = [NSSortDescriptor(key: "lastQueryTime",
-                                                        ascending: false)]
+    private func updateUI() {
+        if let query = twitterQuery, let context = twitterQuery?.managedObjectContext {
+            let request: NSFetchRequest<Mention> = Mention.fetchRequest()
+            request.predicate = NSPredicate(format: "tweet.queries CONTAINS %@", query)
+            request.sortDescriptors = [NSSortDescriptor(key: "keyword",
+                                                        ascending: true)]
             fetchedResultsController = NSFetchedResultsController(
                 fetchRequest: request,
                 managedObjectContext: context,
@@ -53,38 +47,19 @@ class TweetHistoryTableViewController: UITableViewController, NSFetchedResultsCo
         }
     }
 
-    // MARK: Navigation
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destinationVc = segue.destination.contentViewController as? TweetTableViewController,
-            let sendingCell = sender as? UITableViewCell {
-            destinationVc.searchText = sendingCell.textLabel?.text
-        } else if let destinationVc = segue.destination.contentViewController as? PopularMentionsTableViewController,
-            let sendingCell = sender as? UITableViewCell {
-            let cellTweetQuery = fetchedResultsController?.object(
-                at: self.tableView.indexPath(for: sendingCell)!)
-            destinationVc.twitterQuery = cellTweetQuery
-        }
-    }
-
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        return !isEditing
-    }
-
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView,
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: Storyboard.historicalTweetCellIdentifier,
-            for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PopularMentionsCell",
+                                                 for: indexPath)
 
-        if let tweetQuery = fetchedResultsController?.object(at: indexPath) {
-            var term: String?
-            tweetQuery.managedObjectContext?.performAndWait {
-                term = tweetQuery.term
+        if let mention = fetchedResultsController?.object(at: indexPath) {
+            var mentionKeyword: String?
+            mention.managedObjectContext?.performAndWait {
+                mentionKeyword = mention.keyword
             }
-            cell.textLabel?.text = term
+            cell.textLabel?.text = mentionKeyword
         }
 
         return cell
@@ -99,6 +74,15 @@ class TweetHistoryTableViewController: UITableViewController, NSFetchedResultsCo
             return sections[section].numberOfObjects
         } else {
             return 0
+        }
+    }
+
+    override func tableView(_ tableView: UITableView,
+                            titleForHeaderInSection section: Int) -> String? {
+        if let sections = fetchedResultsController?.sections, sections.count > 0 {
+            return sections[section].name
+        } else {
+            return nil
         }
     }
 
@@ -152,5 +136,4 @@ class TweetHistoryTableViewController: UITableViewController, NSFetchedResultsCo
         _ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
-
 }
