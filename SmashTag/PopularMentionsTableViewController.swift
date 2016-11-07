@@ -16,7 +16,7 @@ class PopularMentionsTableViewController: UITableViewController,
         static let popularMentionsQuery = "SUBQUERY(tweets, $tweet, SUBQUERY($tweet.queries, " +
                                           "$query, $query.term = %@).@count > 0).@count > 1"
     }
-    
+
     var twitterQuery: TweetQuery? {
         didSet {
             updateUI()
