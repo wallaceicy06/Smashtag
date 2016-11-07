@@ -17,7 +17,7 @@ public class Mention: NSManagedObject {
         let request: NSFetchRequest<Mention> = Mention.fetchRequest()
 
         request.predicate = NSPredicate(
-            format: "keyword = %@",
+            format: "keyword =[c] %@",
             twitterInfo.keyword)
 
         if let mention = (try? context.fetch(request))?.first {
@@ -27,6 +27,5 @@ public class Mention: NSManagedObject {
             newMention.keyword = twitterInfo.keyword
             return newMention
         }
-
     }
 }

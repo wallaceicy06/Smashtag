@@ -38,7 +38,7 @@ class TweetHistoryTableViewController: UITableViewController, NSFetchedResultsCo
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         if let context = managedObjectContext {
             let request: NSFetchRequest<TweetQuery> = TweetQuery.fetchRequest()
             request.sortDescriptors = [NSSortDescriptor(key: "lastQueryTime",

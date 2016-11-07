@@ -12,6 +12,11 @@ import CoreData
 class PopularMentionsTableViewController: UITableViewController,
                                           NSFetchedResultsControllerDelegate {
 
+    struct Constants {
+        static let popularMentionsQuery = "SUBQUERY(tweets, $tweet, SUBQUERY($tweet.queries, " +
+                                          "$query, $query.term = %@).@count > 0).@count > 0"
+    }
+    
     var twitterQuery: TweetQuery? {
         didSet {
             updateUI()
@@ -32,9 +37,9 @@ class PopularMentionsTableViewController: UITableViewController,
     }
 
     private func updateUI() {
-        if let query = twitterQuery, let context = twitterQuery?.managedObjectContext {
+        if let queryTerm = twitterQuery?.term, let context = twitterQuery?.managedObjectContext {
             let request: NSFetchRequest<Mention> = Mention.fetchRequest()
-            request.predicate = NSPredicate(format: "tweet.queries CONTAINS %@", query)
+            request.predicate = NSPredicate(format: Constants.popularMentionsQuery, queryTerm)
             request.sortDescriptors = [NSSortDescriptor(key: "keyword",
                                                         ascending: true)]
             fetchedResultsController = NSFetchedResultsController(
