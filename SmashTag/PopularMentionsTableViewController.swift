@@ -14,7 +14,7 @@ class PopularMentionsTableViewController: UITableViewController,
 
     struct Constants {
         static let popularMentionsQuery = "SUBQUERY(tweets, $tweet, SUBQUERY($tweet.queries, " +
-                                          "$query, $query.term = %@).@count > 0).@count > 0"
+                                          "$query, $query.term = %@).@count > 0).@count > 1"
     }
     
     var twitterQuery: TweetQuery? {
